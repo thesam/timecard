@@ -1,8 +1,11 @@
 <html>
-	<div ng-app="mainApp">
-		{{5+5}}
-		<div ng-controller="MainController"></div>
-	</div>
-	<script src="angular.min.js"></script>
-	<script src="timecard.js"></script>
+<div ng-app="mainApp">
+    <div ng-controller="MainController">
+        <div ng-repeat="day in days">
+            {{day.name}}
+        </div>
+    </div>
+</div>
+<script src="angular.min.js"></script>
+<script src="timecard.js"></script>
 </html>
