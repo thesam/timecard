@@ -3,6 +3,10 @@
     <div ng-controller="MainController">
         <div ng-repeat="day in days">
             {{day.name}}
+            <div ng-repeat="entry in day.entries">
+                <div>{{entry.start}}-{{entry.stop}}</div>
+            </div>
+            <button ng-click="newEntry(day)">Add</button>
         </div>
     </div>
 </div>
