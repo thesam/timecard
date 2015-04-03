@@ -18,7 +18,7 @@ angular.module("mainApp",[]).controller("MainController", function($scope) {
         if (!entries) {
             return 0;
         }
-        return entries.map(function(entry) {
+        var sumMin = entries.map(function(entry) {
             var start = new Date("2015-04-03 " + entry.start);
             var stop = new Date("2015-04-03 " + entry.stop);
             var diffMs = stop-start;
@@ -26,6 +26,16 @@ angular.module("mainApp",[]).controller("MainController", function($scope) {
             return diffMin;
         }).reduce(function(sum,elem) {
             return sum + elem;
-        });
+        },0);
+
+        var hours = sumMin / 60;
+        var minutes = sumMin % 60;
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        return hours + ":" + minutes;
+    }
+    $scope.deleteEntry = function(day,index) {
+        day.entries.splice(index);
     }
 });
