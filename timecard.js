@@ -14,4 +14,18 @@ angular.module("mainApp",[]).controller("MainController", function($scope) {
         }
         day.entries.push({start: "9:00", stop: "17:00"});
     }
+    $scope.sum = function(entries) {
+        if (!entries) {
+            return 0;
+        }
+        return entries.map(function(entry) {
+            var start = new Date("2015-04-03 " + entry.start);
+            var stop = new Date("2015-04-03 " + entry.stop);
+            var diffMs = stop-start;
+            var diffMin = diffMs / (1000*60);
+            return diffMin;
+        }).reduce(function(sum,elem) {
+            return sum + elem;
+        });
+    }
 });
