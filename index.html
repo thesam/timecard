@@ -4,24 +4,28 @@
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-theme.min.css" rel="stylesheet">
 </head>
-<div class="col-md-9" ng-app="mainApp">
-    <div ng-controller="MainController">
-        <div ng-repeat="day in days">
-            <h3>{{day.name}}</h3>
+<div class="container">
+    <div class="row">
+        <div ng-app="mainApp">
+            <div ng-controller="MainController">
+                <div ng-repeat="day in days">
+                    <h3>{{day.name}}</h3>
 
-            <div>Total: {{sum(day.entries)}}</div>
-            <div ng-repeat="entry in day.entries">
-                <form>
-                    <input type="text" ng-model="entry.start">-<input type="text" ng-model="entry.stop">
-                    <select>
-                        <option>Billable</option>
-                        <option>Non-billable</option>
-                        <option>Break</option>
-                    </select>
-                    <a href="" ng-click="deleteEntry(day,$index)">X</a>
-                </form>
+                    <div>Total: {{sum(day.entries)}}</div>
+                    <div ng-repeat="entry in day.entries">
+                        <form>
+                            <input type="text" ng-model="entry.start">-<input type="text" ng-model="entry.stop">
+                            <select>
+                                <option>Billable</option>
+                                <option>Non-billable</option>
+                                <option>Break</option>
+                            </select>
+                            <a href="" ng-click="deleteEntry(day,$index)">X</a>
+                        </form>
+                    </div>
+                    <button class="btn btn-primary" ng-click="newEntry(day)">Add</button>
+                </div>
             </div>
-            <button class="btn btn-primary" ng-click="newEntry(day)">Add</button>
         </div>
     </div>
 </div>
