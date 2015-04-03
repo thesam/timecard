@@ -36,6 +36,6 @@ angular.module("mainApp",[]).controller("MainController", function($scope) {
         return hours + ":" + minutes;
     }
     $scope.deleteEntry = function(day,index) {
-        day.entries.splice(index);
+        day.entries.splice(index,1);
     }
 });
