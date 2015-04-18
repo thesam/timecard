@@ -1,0 +1,11 @@
+{
+  "name": "timecard",
+  "version": "0.0.0",
+  "description": "Timecard GUI",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
+}

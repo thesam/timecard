@@ -5,12 +5,19 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
     }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'be.filipblondeel.gradle:gradle-gulp-plugin:0.1'
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'gulp'
 
 jar {
     baseName = 'trubbl-issues'
@@ -40,3 +47,15 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
+
+node {
+    // Version of node to use.
+    version = '0.10.28'
+
+    // Enabled the automatic download. False is the default (for now).
+    download = true
+}
+
+gulp_build.dependsOn 'installGulp'
+gulp_build.dependsOn 'npmInstall'
+processResources.dependsOn gulp_build
