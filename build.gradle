@@ -56,6 +56,13 @@ node {
     download = true
 }
 
+task gulpWatchAsync << {
+    Thread.start {
+        tasks.gulp_watch.execute()
+    }
+}
+gulpWatchAsync.outputs.upToDateWhen { false }
+
 gulp_build.dependsOn 'installGulp'
 gulp_build.dependsOn 'npmInstall'
-processResources.dependsOn gulp_build
+run.dependsOn gulpWatchAsync
