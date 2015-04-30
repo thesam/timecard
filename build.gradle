@@ -20,7 +20,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'gulp'
 
 jar {
-    baseName = 'trubbl-issues'
+    baseName = 'timecard'
     version =  '0.0.1'
 }
 
