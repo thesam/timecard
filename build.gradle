@@ -50,19 +50,22 @@ task wrapper(type: Wrapper) {
 
 node {
     // Version of node to use.
-    version = '0.10.28'
+    version = '0.12.2'
 
     // Enabled the automatic download. False is the default (for now).
     download = true
 }
+
+gulp_build.dependsOn installGulp
+gulp_build.dependsOn npmInstall
 
 task gulpWatchAsync << {
     Thread.start {
         tasks.gulp_watch.execute()
     }
 }
-gulpWatchAsync.outputs.upToDateWhen { false }
+gulpWatchAsync.dependsOn gulp_build
 
-gulp_build.dependsOn 'installGulp'
-gulp_build.dependsOn 'npmInstall'
-run.dependsOn gulpWatchAsync
+task watch << {}
+watch.dependsOn run
+watch.dependsOn gulpWatchAsync
