@@ -1,4 +1,4 @@
-angular.module("mainApp", []).controller("MainController", function ($scope) {
+angular.module("mainApp", ['ngResource']).controller("MainController", function ($scope, $resource) {
     $scope.now = new Date();
     $scope.days = [
         {name: "Monday"},
@@ -70,5 +70,10 @@ angular.module("mainApp", []).controller("MainController", function ($scope) {
     $scope.dateOnly = function (date) {
         var dateStr = date.toISOString();
         return dateStr.split("T")[0];
+    }
+    $scope.submit = function (day) {
+        var Day = $resource("/day");
+        var thisDay = new Day();
+        thisDay.$save();
     }
 });
