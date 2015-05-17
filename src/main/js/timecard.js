@@ -56,4 +56,8 @@ angular.module("mainApp", []).controller("MainController", function ($scope) {
     $scope.deleteEntry = function (day, index) {
         day.entries.splice(index, 1);
     }
+    $scope.dateOnly = function(date) {
+        var dateStr = date.toISOString();
+        return dateStr.split("T")[0];
+    }
 });
