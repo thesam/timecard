@@ -9,9 +9,23 @@ angular.module("mainApp", []).controller("MainController", function ($scope) {
         {name: "Saturday"},
         {name: "Sunday"}
     ];
+
+    $scope.dayIndex = function() {
+        var day = ($scope.now.getDay() + 6) % 7;
+        return day;
+    };
+
     for (var i = 0; i < 7; i++) {
-        $scope.days[i].date = $scope.now;
+        var currentDay = $scope.dayIndex();
+        var diff = i - currentDay;
+        $scope.days[i].date = new Date($scope.now.getTime() + diff*(60*60*24*1000));
     }
+
+    $scope.prevWeek = function() {}
+
+    $scope.nextWeek = function() {}
+
+
     $scope.newEntry = function (day) {
         if (!day.entries) {
             day.entries = [];
