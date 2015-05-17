@@ -4,12 +4,13 @@
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-theme.min.css" rel="stylesheet">
 </head>
-<div class="container">
-    <div class="row">
-        <div ng-app="mainApp">
-            <div ng-controller="MainController">
+<div class="container" ng-app="mainApp">
+    <div class="row" ng-controller="MainController">
+        <div>
+            <div>
                 <div ng-repeat="day in days">
                     <h3>{{day.name}} - {{dateOnly(day.date)}}</h3>
+
                     <div ng-show="$index === dayIndex()">[TODAY]</div>
 
                     <div>Total: {{sum(day.entries)}}</div>
@@ -28,10 +29,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <button ng-click="prevWeek()">Prev</button>
-        <button ng-click="nextWeek()">Next</button>
+        <div>
+            <button ng-click="prevWeek()">Prev</button>
+            <button ng-click="nextWeek()">Next</button>
+        </div>
     </div>
 </div>
 </body>

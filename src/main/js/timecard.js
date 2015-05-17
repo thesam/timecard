@@ -9,21 +9,32 @@ angular.module("mainApp", []).controller("MainController", function ($scope) {
         {name: "Saturday"},
         {name: "Sunday"}
     ];
+    var offset = 0;
 
-    $scope.dayIndex = function() {
+    $scope.dayIndex = function () {
         var day = ($scope.now.getDay() + 6) % 7;
         return day;
     };
 
-    for (var i = 0; i < 7; i++) {
-        var currentDay = $scope.dayIndex();
-        var diff = i - currentDay;
-        $scope.days[i].date = new Date($scope.now.getTime() + diff*(60*60*24*1000));
+    $scope.updateWeek = function () {
+        for (var i = 0; i < 7; i++) {
+            var currentDay = $scope.dayIndex();
+            var diff = i - currentDay - offset;
+            $scope.days[i].date = new Date($scope.now.getTime() + diff * (60 * 60 * 24 * 1000));
+        }
     }
 
-    $scope.prevWeek = function() {}
+    $scope.updateWeek(0);
 
-    $scope.nextWeek = function() {}
+    $scope.prevWeek = function () {
+        offset += 7;
+        $scope.updateWeek();
+    }
+
+    $scope.nextWeek = function () {
+        offset -= 7;
+        $scope.updateWeek();
+    }
 
 
     $scope.newEntry = function (day) {
@@ -56,7 +67,7 @@ angular.module("mainApp", []).controller("MainController", function ($scope) {
     $scope.deleteEntry = function (day, index) {
         day.entries.splice(index, 1);
     }
-    $scope.dateOnly = function(date) {
+    $scope.dateOnly = function (date) {
         var dateStr = date.toISOString();
         return dateStr.split("T")[0];
     }
