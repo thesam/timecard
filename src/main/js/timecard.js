@@ -9,6 +9,11 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
         {name: "Saturday"},
         {name: "Sunday"}
     ];
+    $scope.types = [
+        "Billable",
+        "Non-billable",
+        "Break"
+    ];
     var offset = 0;
 
     $scope.dayIndex = function () {
@@ -37,11 +42,11 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
     }
 
 
-    $scope.newEntry = function (day) {
+    $scope.newEntry = function (day,type) {
         if (!day.entries) {
             day.entries = [];
         }
-        day.entries.push({start: "9:00", stop: "17:00"});
+        day.entries.push({start: "9:00", stop: "17:00", type: type});
     };
     $scope.sum = function (entries) {
         if (!entries) {
