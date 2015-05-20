@@ -9,9 +9,7 @@
         <div>
             <div>
                 <div ng-repeat="day in days">
-                    <h3>{{day.name}} - {{dateOnly(day.date)}}</h3>
-
-                    <div ng-show="$index === dayIndex()">[TODAY]</div>
+                    <h3>{{day.name}} - {{dateOnly(day.date)}} <span ng-show="$index === dayIndex()">[TODAY]</span></h3>
 
                     <div>Total: {{sum(day.entries)}}</div>
                     <div ng-repeat="entry in day.entries">
