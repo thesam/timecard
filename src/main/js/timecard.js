@@ -73,6 +73,8 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
     }
     $scope.submit = function (day) {
         var Day = $resource("/day");
-        Day.save(day);
+        var dayApi = angular.copy(day);
+        dayApi.date = $scope.dateOnly(dayApi.date);
+        Day.save(dayApi);
     }
 });
