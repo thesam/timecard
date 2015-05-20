@@ -1,13 +1,13 @@
 angular.module("mainApp", ['ngResource']).controller("MainController", function ($scope, $resource) {
     $scope.now = new Date();
     $scope.days = [
-        {name: "Monday"},
-        {name: "Tuesday"},
-        {name: "Wednesday"},
-        {name: "Thursday"},
-        {name: "Friday"},
-        {name: "Saturday"},
-        {name: "Sunday"}
+        {name: "Monday", entries: []},
+        {name: "Tuesday", entries: []},
+        {name: "Wednesday", entries: []},
+        {name: "Thursday", entries: []},
+        {name: "Friday", entries: []},
+        {name: "Saturday", entries: []},
+        {name: "Sunday", entries: []}
     ];
     $scope.types = [
         "Billable",
@@ -42,10 +42,7 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
     }
 
 
-    $scope.newEntry = function (day,type) {
-        if (!day.entries) {
-            day.entries = [];
-        }
+    $scope.newEntry = function (day, type) {
         day.entries.push({start: "9:00", stop: "17:00", type: type});
     };
     $scope.sum = function (entries) {
@@ -68,7 +65,18 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
             minutes = "0" + minutes;
         }
         return hours + ":" + minutes;
+    };
+
+    $scope.sum2 = function (day, type) {
+        if (!day) {
+             return;
+        }
+        var entriesOfType = day.entries.filter(function (entry) {
+            return entry.type === type;
+        });
+        return $scope.sum(entriesOfType);
     }
+
     $scope.deleteEntry = function (day, index) {
         day.entries.splice(index, 1);
     }
@@ -76,10 +84,13 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
         var dateStr = date.toISOString();
         return dateStr.split("T")[0];
     }
-    $scope.submit = function (day) {
+    $scope.save = function (day) {
         var Day = $resource("/day");
         var dayApi = angular.copy(day);
         dayApi.date = $scope.dateOnly(dayApi.date);
         Day.save(dayApi);
+    }
+    $scope.lock = function (day) {
+        throw "Not implemented!";
     }
 });

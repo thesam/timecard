@@ -25,7 +25,8 @@
                         </button>
                     </div>
                     <div>
-                        <button class="btn btn-ok" ng-click="submit(day)">Submit</button>
+                        <button class="btn btn-ok" ng-click="save(day)">Save</button>
+                        <button class="btn btn-ok" ng-click="lock(day)">Lock</button>
                     </div>
                 </div>
             </div>
@@ -34,6 +35,21 @@
             <button ng-click="prevWeek()">Prev</button>
             <button ng-click="nextWeek()">Next</button>
         </div>
+        <h3>Summary</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th ng-repeat="day in days">{{day.name}}</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="type in types">
+                   <td>{{type}}</td>
+                    <td ng-repeat="day in days">{{sum2(day,type)}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
