@@ -2,8 +2,14 @@ package se.timberline.timecard.model;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import se.timberline.timecard.Application;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+@SpringApplicationConfiguration(classes = Application.class)
 public class DayRepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -11,7 +17,10 @@ public class DayRepositoryIntegrationTest extends AbstractTransactionalJUnit4Spr
 
     @Test
     public void canStore() {
-        dayRepository.store(new Day());
+        Day day = new Day();
+        Day savedDay = dayRepository.save(day);
+        assertEquals(day.date(), savedDay.date());
+        assertNotNull(savedDay.id());
     }
 
 }
