@@ -5,48 +5,48 @@
     <link href="bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <div class="container" ng-app="mainApp">
-    <div class="row" ng-controller="MainController">
+    <div class="row" ng-controller="MainController as vm">
         <div>
             <div>
-                <div ng-repeat="day in days">
-                    <h3>{{day.name}} - {{dateOnly(day.date)}} <span ng-show="$index === dayIndex()">[TODAY]</span></h3>
+                <div ng-repeat="day in vm.days">
+                    <h3>{{day.name}} - {{vm.dateOnly(day.date)}} <span ng-show="$index === vm.dayIndex()">[TODAY]</span></h3>
 
-                    <div>Total: {{sum(day.entries)}}</div>
+                    <div>Total: {{vm.sum(day.entries)}}</div>
                     <div ng-repeat="entry in day.entries">
                         <form>
                             <input type="text" ng-model="entry.start">-<input type="text" ng-model="entry.stop">
-                            <select ng-model="entry.type" ng-options="type for type in types">
+                            <select ng-model="entry.type" ng-options="type for type in vm.types">
                             </select>
-                            <a href="" ng-click="deleteEntry(day,$index)">X</a>
+                            <a href="" ng-click="vm.deleteEntry(day,$index)">X</a>
                         </form>
                     </div>
                     <div>
-                        <button class="btn btn-primary" ng-repeat="type in types" ng-click="newEntry(day,type)">{{type}}
+                        <button class="btn btn-primary" ng-repeat="type in vm.types" ng-click="vm.newEntry(day,type)">{{type}}
                         </button>
                     </div>
                     <div>
-                        <button class="btn btn-ok" ng-click="save(day)">Save</button>
-                        <button class="btn btn-ok" ng-click="lock(day)">Lock</button>
+                        <button class="btn btn-ok" ng-click="vm.save(day)">Save</button>
+                        <button class="btn btn-ok" ng-click="vm.lock(day)">Lock</button>
                     </div>
                 </div>
             </div>
         </div>
         <div>
-            <button ng-click="prevWeek()">Prev</button>
-            <button ng-click="nextWeek()">Next</button>
+            <button ng-click="vm.prevWeek()">Prev</button>
+            <button ng-click="vm.nextWeek()">Next</button>
         </div>
         <h3>Summary</h3>
         <table class="table">
             <thead>
             <tr>
                 <th></th>
-                <th ng-repeat="day in days">{{day.name}}</th>
+                <th ng-repeat="day in vm.days">{{day.name}}</th>
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="type in types">
+                <tr ng-repeat="type in vm.types">
                    <td>{{type}}</td>
-                    <td ng-repeat="day in days">{{sum2(day,type)}}</td>
+                    <td ng-repeat="day in vm.days">{{vm.sum2(day,type)}}</td>
                 </tr>
             </tbody>
         </table>

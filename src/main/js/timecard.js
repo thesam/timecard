@@ -1,6 +1,8 @@
-angular.module("mainApp", ['ngResource']).controller("MainController", function ($scope, $resource) {
-    $scope.now = new Date();
-    $scope.days = [
+angular.module("mainApp", ['ngResource']).controller("MainController", function ($resource) {
+    var vm = this;
+
+    vm.now = new Date();
+    vm.days = [
         {name: "Monday", entries: []},
         {name: "Tuesday", entries: []},
         {name: "Wednesday", entries: []},
@@ -9,43 +11,43 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
         {name: "Saturday", entries: []},
         {name: "Sunday", entries: []}
     ];
-    $scope.types = [
+    vm.types = [
         "Billable",
         "Non-billable",
         "Break"
     ];
     var offset = 0;
 
-    $scope.dayIndex = function () {
-        var day = ($scope.now.getDay() + 6) % 7;
+    vm.dayIndex = function () {
+        var day = (vm.now.getDay() + 6) % 7;
         return day;
     };
 
-    $scope.updateWeek = function () {
+    vm.updateWeek = function () {
         for (var i = 0; i < 7; i++) {
-            var currentDay = $scope.dayIndex();
+            var currentDay = vm.dayIndex();
             var diff = i - currentDay - offset;
-            $scope.days[i].date = new Date($scope.now.getTime() + diff * (60 * 60 * 24 * 1000));
+            vm.days[i].date = new Date(vm.now.getTime() + diff * (60 * 60 * 24 * 1000));
         }
     }
 
-    $scope.updateWeek(0);
+    vm.updateWeek(0);
 
-    $scope.prevWeek = function () {
+    vm.prevWeek = function () {
         offset += 7;
-        $scope.updateWeek();
+        vm.updateWeek();
     }
 
-    $scope.nextWeek = function () {
+    vm.nextWeek = function () {
         offset -= 7;
-        $scope.updateWeek();
+        vm.updateWeek();
     }
 
 
-    $scope.newEntry = function (day, type) {
+    vm.newEntry = function (day, type) {
         day.entries.push({start: "9:00", stop: "17:00", type: type});
     };
-    $scope.sum = function (entries) {
+    vm.sum = function (entries) {
         if (!entries) {
             return "0:00";
         }
@@ -67,30 +69,30 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
         return hours + ":" + minutes;
     };
 
-    $scope.sum2 = function (day, type) {
+    vm.sum2 = function (day, type) {
         if (!day) {
              return;
         }
         var entriesOfType = day.entries.filter(function (entry) {
             return entry.type === type;
         });
-        return $scope.sum(entriesOfType);
+        return vm.sum(entriesOfType);
     }
 
-    $scope.deleteEntry = function (day, index) {
+    vm.deleteEntry = function (day, index) {
         day.entries.splice(index, 1);
     }
-    $scope.dateOnly = function (date) {
+    vm.dateOnly = function (date) {
         var dateStr = date.toISOString();
         return dateStr.split("T")[0];
     }
-    $scope.save = function (day) {
+    vm.save = function (day) {
         var Day = $resource("/day");
         var dayApi = angular.copy(day);
-        dayApi.date = $scope.dateOnly(dayApi.date);
+        dayApi.date = vm.dateOnly(dayApi.date);
         Day.save(dayApi);
     }
-    $scope.lock = function (day) {
+    vm.lock = function (day) {
         throw "Not implemented!";
     }
 });
