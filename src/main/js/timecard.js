@@ -1,53 +1,63 @@
-angular.module("mainApp", ['ngResource']).controller("MainController", function ($resource) {
-    var vm = this;
+"use strict";
 
-    vm.now = new Date();
-    vm.days = [
-        {name: "Monday", entries: []},
-        {name: "Tuesday", entries: []},
-        {name: "Wednesday", entries: []},
-        {name: "Thursday", entries: []},
-        {name: "Friday", entries: []},
-        {name: "Saturday", entries: []},
-        {name: "Sunday", entries: []}
-    ];
-    vm.types = [
-        "Billable",
-        "Non-billable",
-        "Break"
-    ];
-    var offset = 0;
+class MainController {
 
-    vm.dayIndex = function () {
-        var day = (vm.now.getDay() + 6) % 7;
+    constructor($resource) {
+        this.$resource = $resource;
+
+        this.now = new Date();
+
+        this.days = [
+            {name: "Monday", entries: []},
+            {name: "Tuesday", entries: []},
+            {name: "Wednesday", entries: []},
+            {name: "Thursday", entries: []},
+            {name: "Friday", entries: []},
+            {name: "Saturday", entries: []},
+            {name: "Sunday", entries: []}
+        ];
+
+        this.types = [
+            "Billable",
+            "Non-billable",
+            "Break"
+        ];
+
+        this.offset = 0;
+
+        this.updateWeek();
+    }
+
+    dayIndex() {
+        var day = (this.now.getDay() + 6) % 7;
         return day;
-    };
+    }
 
-    vm.updateWeek = function () {
+    updateWeek() {
         for (var i = 0; i < 7; i++) {
-            var currentDay = vm.dayIndex();
-            var diff = i - currentDay - offset;
-            vm.days[i].date = new Date(vm.now.getTime() + diff * (60 * 60 * 24 * 1000));
+            var currentDay = this.dayIndex();
+            var diff = i - currentDay - this.offset;
+            this.days[i].date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
         }
     }
 
-    vm.updateWeek(0);
 
-    vm.prevWeek = function () {
-        offset += 7;
-        vm.updateWeek();
+    prevWeek() {
+        this.offset += 7;
+        updateWeek();
     }
 
-    vm.nextWeek = function () {
-        offset -= 7;
-        vm.updateWeek();
+    nextWeek() {
+        this.offset -= 7;
+        updateWeek();
     }
 
 
-    vm.newEntry = function (day, type) {
+    newEntry(day, type) {
         day.entries.push({start: "9:00", stop: "17:00", type: type});
     };
-    vm.sum = function (entries) {
+
+    sum(entries) {
         if (!entries) {
             return "0:00";
         }
@@ -69,30 +79,35 @@ angular.module("mainApp", ['ngResource']).controller("MainController", function 
         return hours + ":" + minutes;
     };
 
-    vm.sum2 = function (day, type) {
+    sum2(day, type) {
         if (!day) {
-             return;
+            return;
         }
         var entriesOfType = day.entries.filter(function (entry) {
             return entry.type === type;
         });
-        return vm.sum(entriesOfType);
+        return this.sum(entriesOfType);
     }
 
-    vm.deleteEntry = function (day, index) {
+    deleteEntry(day, index) {
         day.entries.splice(index, 1);
     }
-    vm.dateOnly = function (date) {
+
+    dateOnly(date) {
         var dateStr = date.toISOString();
         return dateStr.split("T")[0];
     }
-    vm.save = function (day) {
-        var Day = $resource("/day");
+
+    save(day) {
+        var Day = this.$resource("/day");
         var dayApi = angular.copy(day);
-        dayApi.date = vm.dateOnly(dayApi.date);
+        dayApi.date = this.dateOnly(dayApi.date);
         Day.save(dayApi);
     }
-    vm.lock = function (day) {
+
+    lock(day) {
         throw "Not implemented!";
     }
-});
+}
+
+angular.module("mainApp", ['ngResource']).controller("MainController", MainController);
