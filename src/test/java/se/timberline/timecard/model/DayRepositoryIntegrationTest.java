@@ -6,6 +6,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import se.timberline.timecard.Application;
 
+import javax.persistence.EntityManager;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -14,6 +16,9 @@ public class DayRepositoryIntegrationTest extends AbstractTransactionalJUnit4Spr
 
     @Autowired
     private DayRepository dayRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     public void canStore() {
