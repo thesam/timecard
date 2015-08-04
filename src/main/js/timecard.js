@@ -99,7 +99,7 @@ class MainController {
     }
 
     save(day) {
-        var Day = this.$resource("/day");
+        var Day = this.$resource("day");
         var dayApi = angular.copy(day);
         dayApi.date = this.dateOnly(dayApi.date);
         Day.save(dayApi);
