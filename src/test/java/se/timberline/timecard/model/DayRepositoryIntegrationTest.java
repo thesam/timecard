@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import se.timberline.timecard.Application;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -22,8 +23,11 @@ public class DayRepositoryIntegrationTest extends AbstractTransactionalJUnit4Spr
 
     @Test
     public void canStore() {
-        Day day = new Day();
-        Day savedDay = dayRepository.save(day);
+        Day day = new Day(LocalDate.parse("2015-02-01"));
+        dayRepository.save(day);
+        entityManager.flush();
+        entityManager.clear();
+        Day savedDay = dayRepository.findByDate(LocalDate.parse("2015-02-01"));
         assertEquals(day.date(), savedDay.date());
         assertNotNull(savedDay.id());
     }

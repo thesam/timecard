@@ -38,6 +38,7 @@ class MainController {
             var currentDay = this.dayIndex();
             var diff = i - currentDay - this.offset;
             this.days[i].date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
+            var existingDay = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
         }
     }
 
