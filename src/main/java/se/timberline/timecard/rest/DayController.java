@@ -1,6 +1,7 @@
 package se.timberline.timecard.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class DayController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void save(Day day) {
+    public void save(@RequestBody Day day) {
         dayRepository.save(day);
     }
 }
