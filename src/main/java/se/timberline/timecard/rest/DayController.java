@@ -32,7 +32,12 @@ public class DayController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody Day day) {
-        dayRepository.save(day);
+        if (day.id() != null) {
+            Day savedDay = dayRepository.findOne(day.id());
+            savedDay.update(day);
+        } else {
+            dayRepository.save(day);
+        }
     }
 
     @ExceptionHandler

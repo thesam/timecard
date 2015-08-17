@@ -38,7 +38,7 @@ class MainController {
             var currentDay = this.dayIndex();
             var diff = i - currentDay - this.offset;
             this.days[i].date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
-            var existingDay = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
+            this.days[i] = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
         }
     }
 
@@ -56,7 +56,9 @@ class MainController {
 
     newEntry(day, type) {
         day.entries.push({start: "9:00", stop: "17:00", type: type});
-    };
+    }
+
+;
 
     sum(entries) {
         if (!entries) {
@@ -78,7 +80,9 @@ class MainController {
             minutes = "0" + minutes;
         }
         return hours + ":" + minutes;
-    };
+    }
+
+;
 
     sum2(day, type) {
         if (!day) {
@@ -102,7 +106,11 @@ class MainController {
     save(day) {
         var Day = this.$resource("day");
         var dayApi = angular.copy(day);
-        dayApi.date = this.dateOnly(dayApi.date);
+        var dateString = this.dateOnly(dayApi.date);
+        dayApi.date = [
+            parseInt(dateString.split("-")[0]), // year
+            parseInt(dateString.split("-")[1]), // month
+            parseInt(dateString.split("-")[2])]; // day
         Day.save(dayApi);
     }
 

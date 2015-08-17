@@ -9,5 +9,7 @@ import java.time.LocalDate;
 public interface DayRepository extends Repository<Day, Long> {
     Day save(Day day);
 
+    Day findOne(Long id);
+
     Day findByDate(LocalDate date);
 }
