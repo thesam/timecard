@@ -38,7 +38,8 @@ class MainController {
             var currentDay = this.dayIndex();
             var diff = i - currentDay - this.offset;
             this.days[i].date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
-            this.days[i] = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
+            //this.days[i] = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
+            this.days[i].entries = [];
         }
     }
 
@@ -54,11 +55,16 @@ class MainController {
     }
 
 
-    newEntry(day, type) {
-        day.entries.push({start: "9:00", stop: "17:00", type: type});
+    start(day) {
+        day.entries.push({start: new Date()});
+        day.running = true;
     }
 
-;
+    stop(day) {
+        day.entries[day.entries.length - 1].stop = new Date();
+        day.running = false;
+    }
+
 
     sum(entries) {
         if (!entries) {
@@ -95,7 +101,9 @@ class MainController {
     }
 
     deleteEntry(day, index) {
-        day.entries.splice(index, 1);
+        if (!day.running) {
+            day.entries.splice(index, 1);
+        }
     }
 
     dateOnly(date) {

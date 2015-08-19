@@ -8,25 +8,25 @@
     <div class="row" ng-controller="MainController as vm">
         <div>
             <div>
-                <div ng-repeat="day in vm.days">
-                    <h3>{{day.name}} - {{vm.dateOnly(day.date)}} <span ng-show="$index === vm.dayIndex()">[TODAY]</span></h3>
+                <div class="panel panel-default" ng-repeat="day in vm.days">
+                    <div class="panel-heading">
+                        {{day.name}} - {{vm.dateOnly(day.date)}} <span ng-show="$index === vm.dayIndex()">[TODAY]</span>
+                    </div>
 
-                    <div>Total: {{vm.sum(day.entries)}}</div>
-                    <div ng-repeat="entry in day.entries">
-                        <form>
-                            <input type="text" ng-model="entry.start">-<input type="text" ng-model="entry.stop">
-                            <select ng-model="entry.type" ng-options="type for type in vm.types">
-                            </select>
-                            <a href="" ng-click="vm.deleteEntry(day,$index)">X</a>
-                        </form>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" ng-repeat="type in vm.types" ng-click="vm.newEntry(day,type)">{{type}}
-                        </button>
-                    </div>
-                    <div>
-                        <button class="btn btn-ok" ng-click="vm.save(day)">Save</button>
-                        <button class="btn btn-ok" ng-click="vm.lock(day)">Lock</button>
+                    <div class="panel-body">
+                        <div>Total: {{vm.sum(day.entries)}}</div>
+                        <div ng-repeat="entry in day.entries">
+                            <form>
+                                <input type="text" ng-model="entry.start" ng-disabled="day.running">-<input type="text"
+                                                                                                            ng-model="entry.stop"
+                                                                                                            ng-disabled="day.running">
+                                <a href="" ng-click="vm.deleteEntry(day,$index)">X</a>
+                            </form>
+                        </div>
+                        <div>
+                            <button class="btn btn-success" ng-if="!day.running" ng-click="vm.start(day)">Start</button>
+                            <button class="btn btn-danger" ng-if="day.running" ng-click="vm.stop(day)">Stop</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,10 +44,10 @@
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="type in vm.types">
-                   <td>{{type}}</td>
-                    <td ng-repeat="day in vm.days">{{vm.sum2(day,type)}}</td>
-                </tr>
+            <tr ng-repeat="type in vm.types">
+                <td>{{type}}</td>
+                <td ng-repeat="day in vm.days">{{vm.sum2(day,type)}}</td>
+            </tr>
             </tbody>
         </table>
     </div>
