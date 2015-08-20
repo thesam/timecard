@@ -35,11 +35,16 @@ class MainController {
 
     updateWeek() {
         for (var i = 0; i < 7; i++) {
-            var currentDay = this.dayIndex();
-            var diff = i - currentDay - this.offset;
-            this.days[i].date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
-            //this.days[i] = this.$resource('day').get({date: this.dateOnly(this.days[i].date)});
-            this.days[i].entries = [];
+            let day = this.days[i];
+            let currentDay = this.dayIndex();
+            let diff = i - currentDay - this.offset;
+            day.date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
+            this.$resource('day').get({date: this.dateOnly(day.date)}).$promise.then(dayFromServer => {
+                day.id = dayFromServer.id;
+                day.entries = dayFromServer.entries || [];
+            });
+
+
         }
     }
 
@@ -91,7 +96,7 @@ class MainController {
 ;
 
     sum2(day, type) {
-        if (!day) {
+        if (!day || !day.entries) {
             return;
         }
         var entriesOfType = day.entries.filter(function (entry) {
