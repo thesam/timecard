@@ -126,6 +126,7 @@ class MainController {
             parseInt(dateString.split("-")[1]), // month
             parseInt(dateString.split("-")[2])]; // day
         Day.save(dayApi).$promise.then(function (savedDay) {
+            savedDay.date = new Date(savedDay.date[0] + "-" + savedDay.date[1] + "-" + savedDay.date[2]);
             angular.copy(savedDay, day);
         });
     }
