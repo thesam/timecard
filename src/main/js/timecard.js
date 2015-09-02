@@ -5,17 +5,9 @@ class MainController {
     constructor($resource) {
         this.$resource = $resource;
 
-        this.now = new Date();
+        this.now = moment();
 
-        this.days = [
-            {name: "Monday", entries: []},
-            {name: "Tuesday", entries: []},
-            {name: "Wednesday", entries: []},
-            {name: "Thursday", entries: []},
-            {name: "Friday", entries: []},
-            {name: "Saturday", entries: []},
-            {name: "Sunday", entries: []}
-        ];
+        this.currentDay = {};
 
         this.types = [
             "Billable",
@@ -25,39 +17,32 @@ class MainController {
 
         this.offset = 0;
 
-        this.updateWeek();
-        this.currentDay = this.days[this.dayIndex()];
+        this.updateDay();
     }
 
-    dayIndex() {
-        var day = (this.now.getDay() + 6) % 7;
-        return day;
-    }
+    updateDay() {
+        let currentDate = angular.copy(this.now).add(this.offset, 'days').format("YYYY-MM-DD");
 
-    updateWeek() {
-        for (var i = 0; i < 7; i++) {
-            let day = this.days[i];
-            let currentDay = this.dayIndex();
-            let diff = i - currentDay - this.offset;
-            day.date = new Date(this.now.getTime() + diff * (60 * 60 * 24 * 1000));
-            this.$resource('day').get({date: this.dateOnly(day.date)}).$promise.then(dayFromServer => {
-                day.id = dayFromServer.id;
-                day.entries = dayFromServer.entries || [];
-            });
+        this.currentDay = {
+            date: currentDate,
+            entries: []
+        };
 
-
-        }
+        this.$resource('day').get({date: this.currentDay.date}).$promise.then(dayFromServer => {
+            this.currentDay.id = dayFromServer.id;
+            this.currentDay.entries = dayFromServer.entries || [];
+        });
     }
 
 
-    prevWeek() {
-        this.offset += 1;
-        this.updateWeek();
-    }
-
-    nextWeek() {
+    prev() {
         this.offset -= 1;
-        this.updateWeek();
+        this.updateDay();
+    }
+
+    next() {
+        this.offset += 1;
+        this.updateDay();
     }
 
 
@@ -112,21 +97,11 @@ class MainController {
         }
     }
 
-    dateOnly(date) {
-        var dateStr = date.toISOString();
-        return dateStr.split("T")[0];
-    }
-
     save(day) {
         var Day = this.$resource("day");
         var dayApi = angular.copy(day);
-        var dateString = this.dateOnly(dayApi.date);
-        dayApi.date = [
-            parseInt(dateString.split("-")[0]), // year
-            parseInt(dateString.split("-")[1]), // month
-            parseInt(dateString.split("-")[2])]; // day
         Day.save(dayApi).$promise.then(function (savedDay) {
-            savedDay.date = new Date(savedDay.date[0] + "-" + savedDay.date[1] + "-" + savedDay.date[2]);
+            savedDay.date = moment(savedDay.date[0] + "-" + savedDay.date[1] + "-" + savedDay.date[2], "YYYY-M-D");
             angular.copy(savedDay, day);
         });
     }

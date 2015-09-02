@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "Timecard GUI",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.10.6"
+  },
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0"

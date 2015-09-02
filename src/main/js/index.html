@@ -10,7 +10,7 @@
             <div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{vm.currentDay.name}} - {{vm.dateOnly(vm.currentDay.date)}} - ID: {{vm.currentDay.id}} <span
+                        {{vm.currentDay.name}} - {{vm.currentDay.date}} - ID: {{vm.currentDay.id}} <span
                             ng-show="false">[TODAY]</span>
                     </div>
 
@@ -35,13 +35,14 @@
             </div>
         </div>
         <div>
-            <button ng-click="vm.prevWeek()">Prev</button>
-            <button ng-click="vm.nextWeek()">Next</button>
+            <button ng-click="vm.prev()">Prev</button>
+            <button ng-click="vm.next()">Next</button>
         </div>
     </div>
 </div>
 </body>
 <script src="angular.min.js"></script>
 <script src="angular-resource.min.js"></script>
+<script src="moment.js"></script>
 <script src="timecard.js"></script>
 </html>
