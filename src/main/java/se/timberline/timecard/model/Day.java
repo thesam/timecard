@@ -49,6 +49,6 @@ public class Day {
 
     public void update(Day day) {
         this.date = day.date;
-        this.entries = entries;
+        this.entries = day.entries;
     }
 }
