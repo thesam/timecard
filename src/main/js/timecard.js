@@ -51,13 +51,13 @@ class MainController {
 
 
     prevWeek() {
-        this.offset += 7;
-        updateWeek();
+        this.offset += 1;
+        this.updateWeek();
     }
 
     nextWeek() {
-        this.offset -= 7;
-        updateWeek();
+        this.offset -= 1;
+        this.updateWeek();
     }
 
 
@@ -125,7 +125,9 @@ class MainController {
             parseInt(dateString.split("-")[0]), // year
             parseInt(dateString.split("-")[1]), // month
             parseInt(dateString.split("-")[2])]; // day
-        Day.save(dayApi);
+        Day.save(dayApi).$promise.then(function (savedDay) {
+            angular.copy(savedDay, day);
+        });
     }
 
     lock(day) {
