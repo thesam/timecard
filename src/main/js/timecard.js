@@ -26,6 +26,7 @@ class MainController {
         this.offset = 0;
 
         this.updateWeek();
+        this.currentDay = this.days[this.dayIndex()];
     }
 
     dayIndex() {

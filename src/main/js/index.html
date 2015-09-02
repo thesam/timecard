@@ -8,25 +8,27 @@
     <div class="row" ng-controller="MainController as vm">
         <div>
             <div>
-                <div class="panel panel-default" ng-repeat="day in vm.days">
+                <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{day.name}} - {{vm.dateOnly(day.date)}} <span ng-show="$index === vm.dayIndex()">[TODAY]</span>
+                        {{vm.currentDay.name}} - {{vm.dateOnly(vm.currentDay.date)}} <span
+                            ng-show="false">[TODAY]</span>
                     </div>
 
                     <div class="panel-body">
-                        <div>Total: {{vm.sum(day.entries)}}</div>
-                        <div ng-repeat="entry in day.entries">
+                        <div>Total: {{vm.sum(vm.currentDay.entries)}}</div>
+                        <div ng-repeat="entry in vm.currentDay.entries">
                             <form>
-                                <input type="text" ng-model="entry.start" ng-disabled="day.running">-<input type="text"
-                                                                                                            ng-model="entry.stop"
-                                                                                                            ng-disabled="day.running">
-                                <a href="" ng-click="vm.deleteEntry(day,$index)">X</a>
+                                <input type="text" ng-model="entry.start" ng-disabled="vm.currentDay.running">-<input
+                                    type="text"
+                                    ng-model="entry.stop"
+                                    ng-disabled="vm.currentDay.running">
+                                <a href="" ng-click="vm.deleteEntry(vm.currentDay,$index)">X</a>
                             </form>
                         </div>
                         <div>
-                            <button class="btn btn-success" ng-if="!day.running" ng-click="vm.start(day)">Start</button>
-                            <button class="btn btn-danger" ng-if="day.running" ng-click="vm.stop(day)">Stop</button>
-                            <button class="btn btn-primary" ng-click="vm.save(day)">Save</button>
+                            <button class="btn btn-success" ng-if="!vm.currentDay.running" ng-click="vm.start(vm.currentDay)">Start</button>
+                            <button class="btn btn-danger" ng-if="vm.currentDay.running" ng-click="vm.stop(vm.currentDay)">Stop</button>
+                            <button class="btn btn-primary" ng-click="vm.save(vm.currentDay)">Save</button>
                         </div>
                     </div>
                 </div>
@@ -36,21 +38,6 @@
             <button ng-click="vm.prevWeek()">Prev</button>
             <button ng-click="vm.nextWeek()">Next</button>
         </div>
-        <h3>Summary</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th></th>
-                <th ng-repeat="day in vm.days">{{day.name}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="type in vm.types">
-                <td>{{type}}</td>
-                <td ng-repeat="day in vm.days">{{vm.sum2(day,type)}}</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 </body>
