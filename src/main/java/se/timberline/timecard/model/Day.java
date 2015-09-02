@@ -49,6 +49,7 @@ public class Day {
 
     public void update(Day day) {
         this.date = day.date;
-        this.entries = day.entries;
+        this.entries.clear();
+        this.entries.addAll(day.entries);
     }
 }

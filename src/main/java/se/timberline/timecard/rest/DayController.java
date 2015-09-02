@@ -35,6 +35,7 @@ public class DayController {
         if (day.id() != null) {
             Day savedDay = dayRepository.findOne(day.id());
             savedDay.update(day);
+            dayRepository.save(savedDay);
             return savedDay;
         } else {
             return dayRepository.save(day);

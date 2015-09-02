@@ -101,7 +101,7 @@ class MainController {
         var Day = this.$resource("day");
         var dayApi = angular.copy(day);
         Day.save(dayApi).$promise.then(function (savedDay) {
-            savedDay.date = moment(savedDay.date[0] + "-" + savedDay.date[1] + "-" + savedDay.date[2], "YYYY-M-D");
+            savedDay.date = moment(savedDay.date[0] + "-" + savedDay.date[1] + "-" + savedDay.date[2], "YYYY-M-D").format("YYYY-MM-DD");
             angular.copy(savedDay, day);
         });
     }
