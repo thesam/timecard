@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 
-var files_3pp = ['src/main/js_3pp/*.js', 'src/main/css_3pp/*.css','node_modules/moment/moment.js'];
-var js = ['src/main/js/*.js'];
+var files_3pp = ['src/main/js_3pp/*.js', 'src/main/css_3pp/*.css','node_modules/moment/moment.js','node_modules/react/dist/react.js'];
+var js = ['src/main/js/*.js','src/main/js/*.jsx'];
 var html = ['src/main/js/*.html'];
 var all_files = js.concat(html).concat(files_3pp);
 
