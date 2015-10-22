@@ -5,9 +5,14 @@ web:
   links:
   - db
   volumes:
-    - ./build/libs:/app
+    - .:/app
 db:
   image: postgres
+
+testdb:
+  image: postgres
+  ports:
+    - "5432:5432"
 
 #   volumes_from:
 #     - dbdata

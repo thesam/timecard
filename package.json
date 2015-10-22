@@ -4,8 +4,7 @@
   "description": "Timecard GUI",
   "private": true,
   "dependencies": {
-    "moment": "^2.10.6",
-    "react": "^0.13.3"
+    "moment": "^2.10.6"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
