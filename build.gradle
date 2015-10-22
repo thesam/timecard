@@ -55,6 +55,8 @@ node {
 gulp_build.dependsOn installGulp
 gulp_build.dependsOn npmInstall
 
+jar.dependsOn gulp_build
+
 task gulpWatchAsync << {
     Thread.start {
         tasks.gulp_watch.execute()
