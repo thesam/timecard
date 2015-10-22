@@ -47,12 +47,12 @@ class MainController {
 
 
     start(day) {
-        day.entries.push({start: new Date()});
+        day.entries.push({start: moment()});
         day.running = true;
     }
 
     stop(day) {
-        day.entries[day.entries.length - 1].stop = new Date();
+        day.entries[day.entries.length - 1].stop = moment();
         day.running = false;
     }
 
