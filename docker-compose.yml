@@ -8,6 +8,8 @@ web:
     - .:/app
 db:
   image: postgres
+  volumes:
+    - ./pg_data:/var/lib/postgresql/data
 
 testdb:
   image: postgres
