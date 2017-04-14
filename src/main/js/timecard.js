@@ -92,9 +92,15 @@ class MainController {
         return this.sum(entriesOfType);
     }
 
+    addEntry(day) {
+        day.entries.push({});
+        this.$scope.form.$setDirty();
+    }
+
     deleteEntry(day, index) {
         if (!day.running) {
             day.entries.splice(index, 1);
+            this.$scope.form.$setDirty();
         }
     }
 

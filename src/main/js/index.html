@@ -27,6 +27,7 @@
                         </form>
                         <div>
                             <div ng-if="form.$dirty">(Unsaved changes)</div>
+                            <button class="btn btn-primary" ng-click="vm.addEntry(vm.currentDay)">Add</button>
                             <button class="btn btn-primary" ng-click="vm.save(vm.currentDay)">Save</button>
                         </div>
                     </div>
