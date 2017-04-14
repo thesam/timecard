@@ -16,18 +16,17 @@
 
                     <div class="panel-body">
                         <div>Total: {{vm.sum(vm.currentDay.entries)}}</div>
-                        <div ng-repeat="entry in vm.currentDay.entries">
-                            <form>
+                        <form name="form">
+                            <div ng-repeat="entry in vm.currentDay.entries">
                                 <input type="text" ng-model="entry.start" ng-disabled="vm.currentDay.running">-<input
                                     type="text"
                                     ng-model="entry.stop"
                                     ng-disabled="vm.currentDay.running">
                                 <a href="" ng-click="vm.deleteEntry(vm.currentDay,$index)">X</a>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                         <div>
-                            <button class="btn btn-success" ng-if="!vm.currentDay.running" ng-click="vm.start(vm.currentDay)">Start</button>
-                            <button class="btn btn-danger" ng-if="vm.currentDay.running" ng-click="vm.stop(vm.currentDay)">Stop</button>
+                            <div ng-if="form.$dirty">(Unsaved changes)</div>
                             <button class="btn btn-primary" ng-click="vm.save(vm.currentDay)">Save</button>
                         </div>
                     </div>
