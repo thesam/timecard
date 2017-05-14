@@ -1,22 +1,25 @@
 package se.timberline.timecard.model;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import se.timberline.timecard.Application;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-@SpringApplicationConfiguration(classes = Application.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@WebAppConfiguration
 public class DayRepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
