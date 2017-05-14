@@ -19,8 +19,8 @@
                         <div>Total: {{vm.sum(vm.currentDay.entries)}}</div>
                         <form name="form">
                             <div ng-repeat="entry in vm.currentDay.entries">
-                                <input type="text" ng-model="entry.start" ng-disabled="vm.currentDay.running">-<input
-                                    type="text"
+                                <input type="time" ng-model="entry.start" ng-disabled="vm.currentDay.running">-<input
+                                    type="time"
                                     ng-model="entry.stop"
                                     ng-disabled="vm.currentDay.running">
                                 <a href="" ng-click="vm.deleteEntry(vm.currentDay,$index)">X</a>
